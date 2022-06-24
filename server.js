@@ -1,12 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
+const dotenv = require("dotenv");
 
 const app = express();
 
 var corsOptions = {
   origin: "http://localhost:8081"
 };
+
+dotenv.config();
 
 app.use(cors(corsOptions));
 
@@ -20,7 +23,7 @@ const db = require("./app/models");
 const Role = db.role;
 
 db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+  .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
